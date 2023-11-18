@@ -86,9 +86,46 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 
   document.getElementById('persons').addEventListener('click', () => {
-      fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/characters')
-          .then(data => displayCharacters(data));
-  });
+    fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/characters')
+        .then(data => {
+            // Create search bar
+            let searchBar = document.createElement('input');
+            searchBar.type = 'text';
+            searchBar.placeholder = 'Search...';
+            searchBar.onkeyup = function() {
+                let filter = this.value.toUpperCase();
+                let personsList = document.getElementById('personsList');
+                let persons = personsList.getElementsByTagName('li');
+                for (let i = 0; i < persons.length; i++) {
+                    let person = persons[i].getElementsByTagName('a')[0];
+                    if (person.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        persons[i].style.display = '';
+                    } else {
+                        persons[i].style.display = 'none';
+                    }
+                }
+            };
+            content.appendChild(searchBar);
+
+            // Create list of persons
+            let personsList = document.createElement('ul');
+            personsList.id = 'personsList';
+            data.forEach(person => {
+                let listItem = document.createElement('li');
+                let link = document.createElement('a');
+                link.href = '#';
+                link.innerHTML = person.name;
+                link.addEventListener('click', () => {
+                    // Fetch and display person details
+                    fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/characters/' + person.slug)
+                        .then(data => displayCharacter(data));
+                });
+                listItem.appendChild(link);
+                personsList.appendChild(listItem);
+            });
+            content.appendChild(personsList);
+        });
+});
 
   document.getElementById('quotes').addEventListener('click', () => {
       fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/random')
