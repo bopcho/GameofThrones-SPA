@@ -1,0 +1,47 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+  background-image: url("https://getwallpapers.com/wallpaper/full/b/9/7/1319206-free-download-desktop-wallpaper-game-of-thrones-1920x1080.jpg");
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #6b6262;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #010601;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+select {
+  padding: 8px;
+  font-size: 14px;
+  margin-right: 10px;
+}

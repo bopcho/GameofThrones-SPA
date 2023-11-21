@@ -17,24 +17,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
   function displayHouses(houses) {
-      const houseList = document.createElement('ul');
-      houseList.setAttribute('id', 'house-list');
+    let houseList = document.getElementById('house-list');
+    if (!houseList) {
+        houseList = document.createElement('ul');
+        houseList.setAttribute('id', 'house-list');
+        content.appendChild(houseList);
+    }
 
-      houses.forEach(house => {
-          const listItem = document.createElement('li');
-          listItem.textContent = house.name;
+    while (houseList.firstChild) {
+        houseList.removeChild(houseList.firstChild);
+    }
 
-          listItem.addEventListener('click', () => {
-              fetchAndDisplay(`https://api.gameofthronesquotes.xyz/v1/house/${house.name.toLowerCase()}`)
-                  .then(data => displayHouseMembers(data.members));
-          });
+    houses.forEach(house => {
+        const listItem = document.createElement('li');
+        listItem.textContent = house.name;
 
-          houseList.appendChild(listItem);
-      });
+        listItem.addEventListener('click', () => {
+            fetchAndDisplay(`https://api.gameofthronesquotes.xyz/v1/house/${house.name.toLowerCase()}`)
+                .then(data => displayHouseMembers(data.members));
+        });
 
-      content.innerHTML = '';
-      content.appendChild(houseList);
-  }
+        houseList.appendChild(listItem);
+    });
+}
 
   function displayHouseMembers(members) {
       const memberList = document.createElement('ul');
@@ -64,14 +69,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   function displayQuotes(data) {
     const quotesList = document.createElement('ul');
-
-    // Check if data is an object with 'sentence' and 'character' properties
     if (data && data.sentence && data.character) {
         const listItem = document.createElement('li');
         listItem.innerHTML = `<strong>${data.character.name}</strong>: ${data.sentence}`;
         quotesList.appendChild(listItem);
+   const newQuoteButton = document.createElement('button');
+      newQuoteButton.textContent = 'Get a New Quote';
+      newQuoteButton.addEventListener('click', () => {
+        fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/random', displayQuotes);
+      });
+      quotesList.appendChild(newQuoteButton);
     } else {
-        console.error('Invalid quote data:', data);
+      console.error('Invalid quote data:', data);
     }
 
     content.innerHTML = '';
@@ -88,7 +97,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById('persons').addEventListener('click', () => {
     fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/characters')
         .then(data => {
-            // Create search bar
             let searchBar = document.createElement('input');
             searchBar.type = 'text';
             searchBar.placeholder = 'Search...';
@@ -106,8 +114,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
             };
             content.appendChild(searchBar);
-
-            // Create list of persons
             let personsList = document.createElement('ul');
             personsList.id = 'personsList';
             data.forEach(person => {
@@ -116,7 +122,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 link.href = '#';
                 link.innerHTML = person.name;
                 link.addEventListener('click', () => {
-                    // Fetch and display person details
                     fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/characters/' + person.slug)
                         .then(data => displayCharacter(data));
                 });
