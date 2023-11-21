@@ -54,18 +54,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       content.appendChild(memberList);
   }
 
-  function displayCharacters(characters) {
-      const characterList = document.createElement('ul');
-
-      characters.forEach(character => {
-          const listItem = document.createElement('li');
-          listItem.textContent = character.name;
-          characterList.appendChild(listItem);
-      });
-
-      content.innerHTML = '';
-      content.appendChild(characterList);
-  }
 
   function displayQuotes(data) {
     const quotesList = document.createElement('ul');
