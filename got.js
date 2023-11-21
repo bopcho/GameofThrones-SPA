@@ -61,15 +61,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `<strong>${data.character.name}</strong>: ${data.sentence}`;
         quotesList.appendChild(listItem);
-   const newQuoteButton = document.createElement('button');
-      newQuoteButton.textContent = 'Get a New Quote';
-      newQuoteButton.addEventListener('click', () => {
-        fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/random', displayQuotes);
-      });
-      quotesList.appendChild(newQuoteButton);
-    } else {
-      console.error('Invalid quote data:', data);
-    }
+
+        const newQuoteButton = document.createElement('button');
+          newQuoteButton.textContent = 'Get a New Quote';
+          newQuoteButton.addEventListener('click', () => {
+            fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/random', displayQuotes);
+          });
+          quotesList.appendChild(newQuoteButton);
+        } else {
+          console.error('Invalid quote data:', data);
+          setContent(quotesList);
+
+        }
 
     content.innerHTML = '';
     content.appendChild(quotesList);
