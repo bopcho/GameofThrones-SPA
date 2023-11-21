@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 link.innerHTML = person.name;
                 link.addEventListener('click', () => {
                     fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/characters/' + person.slug)
-                        .then(data => displayCharacter(data));
+                      //  .then();
                 });
                 listItem.appendChild(link);
                 personsList.appendChild(listItem);
