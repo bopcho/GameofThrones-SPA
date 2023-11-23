@@ -58,21 +58,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
   function displayQuotes(data) {
     const quotesList = document.createElement('ul');
     if (data && data.sentence && data.character) {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `<strong>${data.character.name}</strong>: ${data.sentence}`;
-        quotesList.appendChild(listItem);
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `<strong>${data.character.name}</strong>: ${data.sentence}`;
+      quotesList.appendChild(listItem);
 
-        const newQuoteButton = document.createElement('button');
-          newQuoteButton.textContent = 'Get a New Quote';
-          newQuoteButton.addEventListener('click', () => {
-            fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/random', displayQuotes);
-          });
-          quotesList.appendChild(newQuoteButton);
-        } else {
-          console.error('Invalid quote data:', data);
-          setContent(quotesList);
-
-        }
+      const newQuoteButton = document.createElement('button');
+      newQuoteButton.textContent = 'Get a New Quote';
+      newQuoteButton.addEventListener('click', () => {
+        fetchAndDisplay('https://api.gameofthronesquotes.xyz/v1/random')
+          .then(displayQuotes);
+      });
+      quotesList.appendChild(newQuoteButton);
+    } else {
+      console.error('Invalid quote data:', data);
+      setContent(quotesList);
+    }
 
     content.innerHTML = '';
     content.appendChild(quotesList);
